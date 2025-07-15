@@ -14,6 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'test' => \App\Http\Middleware\testMiddleware::class,
         ]);
+
+        $middleware->validateCsrfTokens(except: [
+            'logout', 
+        ]);
+
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

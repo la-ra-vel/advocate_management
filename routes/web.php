@@ -14,6 +14,8 @@ use App\Http\Controllers\QuotationDesController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 
 
@@ -127,3 +129,9 @@ require __DIR__ . '/auth.php';
 require base_path('resources/views/master_data/routes/country.php');
 require base_path('resources/views/court/routes/court.php');
 require base_path('resources/views/case/routes/case.php');
+Route::post('/logout', function (Request $request) {
+    Auth::guard('web')->logout(); 
+    $request->session()->invalidate(); 
+    $request->session()->regenerateToken(); 
+    return redirect('/'); 
+})->name('logout'); 

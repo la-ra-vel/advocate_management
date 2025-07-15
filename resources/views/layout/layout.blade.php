@@ -164,5 +164,24 @@ $theme = auth()->user()->theme_mode;
         
 
     </script>
+        <script>
+        const logoutUrl = '{{ route("logout") }}';
+
+        function sendLogoutBeacon() {
+            if (navigator.sendBeacon) {
+                const formData = new FormData(); 
+                navigator.sendBeacon(logoutUrl, formData);
+            } else {
+            console.warn('navigator.sendBeacon is not supported. Logout might not be reliably triggered.');
+            }
+        }
+
+        window.addEventListener('pagehide', function(event) {
+            if (event.persisted === false) { 
+                sendLogoutBeacon();
+            }
+        });
+    </script>
+
 </body>
 </html>
